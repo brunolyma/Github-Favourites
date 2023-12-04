@@ -147,4 +147,6 @@ td button.remove {
   background: none;
 
   color: red;
+
+  cursor: pointer;
 }

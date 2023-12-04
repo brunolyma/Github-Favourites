@@ -1,19 +1,11 @@
 export class Favourites {
   constructor(root) {
     this.root = document.querySelector(root);
+    this.load();
   }
-}
 
-export class FavouritesView extends Favourites {
-  constructor(root) {
-    super(root);
-
-    this.update();
-  }
-  update() {
-    this.removeAllTr();
-
-    const entries = [
+  load() {
+    this.entries = [
       {
         login: "brunolyma",
         name: "Bruno Lima",
@@ -27,9 +19,50 @@ export class FavouritesView extends Favourites {
         followers: "120000",
       },
     ];
+  }
 
-    entries.forEach((user) => {
-      console.log(user);
+  delete(user) {
+    const filteredEntries = this.entries.filter(
+      (entry) => entry.login !== user.login
+    );
+
+    this.entries = filteredEntries;
+    this.update();
+  }
+}
+
+export class FavouritesView extends Favourites {
+  constructor(root) {
+    super(root);
+
+    this.tbody = this.root.querySelector("table tbody");
+
+    this.update();
+  }
+
+  update() {
+    this.removeAllTr();
+
+    this.entries.forEach((user) => {
+      const row = this.createRow();
+
+      row.querySelector(
+        ".user img"
+      ).src = `https://github.com/${user.login}.png`;
+      row.querySelector(".user img").alt = `${user.name} photo profile`;
+      row.querySelector(".user p").textContent = `${user.name}`;
+      row.querySelector(".user span").textContent = `${user.login}`;
+      row.querySelector(".repositories").textContent = `${user.public_repos}`;
+      row.querySelector(".followers").textContent = `${user.followers}`;
+
+      row.querySelector(".remove").onclick = () => {
+        const isOk = confirm("Tem certeza que deseja deletar essa linha?");
+        if (isOk) {
+          this.delete(user);
+        }
+      };
+
+      this.tbody.append(row);
     });
   }
 
