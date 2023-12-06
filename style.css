@@ -150,3 +150,7 @@ td button.remove {
 
   cursor: pointer;
 }
+
+td button.remove:hover {
+  scale: 1.3;
+}
