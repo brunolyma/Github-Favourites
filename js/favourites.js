@@ -17,6 +17,13 @@ export class Favourites {
   constructor(root) {
     this.root = document.querySelector(root);
     this.load();
+
+    GithubUser.search("brunolyma").then((user) => console.log(user));
+  }
+
+  async add(username) {
+    const user = await GithubUser.search(username);
+    console.log(user);
   }
 
   load() {
@@ -41,6 +48,16 @@ export class FavouritesView extends Favourites {
     this.tbody = this.root.querySelector("table tbody");
 
     this.update();
+    this.onAdd();
+  }
+
+  onAdd() {
+    const addButton = this.root.querySelector(".search button");
+    addButton.onclick = () => {
+      const { value } = this.root.querySelector(".search input");
+
+      this.add(value);
+    };
   }
 
   update() {
