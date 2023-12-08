@@ -21,10 +21,18 @@ export class Favourites {
     GithubUser.search("brunolyma").then((user) => console.log(user));
   }
 
+  load() {
+    this.entries =
+      JSON.parse(localStorage.getItem("@github-favourites:")) || [];
+  }
+
+  save() {
+    localStorage.setItem("@github-favourites:", JSON.stringify(this.entries));
+  }
+
   async add(username) {
     try {
       const user = await GithubUser.search(username);
-      console.log(user);
 
       if (user.login == undefined) {
         throw new Error("Usuário não encontrado!");
@@ -32,14 +40,10 @@ export class Favourites {
 
       this.entries = [user, ...this.entries];
       this.update();
+      this.save();
     } catch (error) {
       alert(error.message);
     }
-  }
-
-  load() {
-    this.entries =
-      JSON.parse(localStorage.getItem("@github-favourites:")) || [];
   }
 
   delete(user) {
@@ -49,6 +53,7 @@ export class Favourites {
 
     this.entries = filteredEntries;
     this.update();
+    this.save();
   }
 }
 
