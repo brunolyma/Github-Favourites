@@ -22,8 +22,19 @@ export class Favourites {
   }
 
   async add(username) {
-    const user = await GithubUser.search(username);
-    console.log(user);
+    try {
+      const user = await GithubUser.search(username);
+      console.log(user);
+
+      if (user.login == undefined) {
+        throw new Error("Usuário não encontrado!");
+      }
+
+      this.entries = [user, ...this.entries];
+      this.update();
+    } catch (error) {
+      alert(error.message);
+    }
   }
 
   load() {
