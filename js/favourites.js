@@ -5,20 +5,10 @@ export class Favourites {
   }
 
   load() {
-    this.entries = [
-      {
-        login: "brunolyma",
-        name: "Bruno Lima",
-        public_repos: "24",
-        followers: "21",
-      },
-      {
-        login: "maykbrito",
-        name: "Mayk Brito",
-        public_repos: "76",
-        followers: "120000",
-      },
-    ];
+    const entries = JSON.parse(localStorage.getItem("@github-favourites:"));
+
+    console.log(entries);
+    this.entries = [];
   }
 
   delete(user) {
