@@ -79,6 +79,7 @@ export class FavouritesView extends Favourites {
         ".user img"
       ).src = `https://github.com/${user.login}.png`;
       row.querySelector(".user img").alt = `${user.name} photo profile`;
+      row.querySelector(".user a").href = `https://github.com/${user.login}`;
       row.querySelector(".user p").textContent = `${user.name}`;
       row.querySelector(".user span").textContent = `${user.login}`;
       row.querySelector(".repositories").textContent = `${user.public_repos}`;
@@ -101,7 +102,7 @@ export class FavouritesView extends Favourites {
     tr.innerHTML = `
     <td class="user">
         <img src="https://github.com/maykbrito.png" alt="Mayke Brito profile picture">
-        <a href="https://github.com/maykbrito">
+        <a href="https://github.com/maykbrito" target="_blank">
             <p>Mayk Brito</p>
             <span>maykbrito</span>
         </a>
